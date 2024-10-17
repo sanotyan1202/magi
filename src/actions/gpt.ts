@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-export async function sendGPT(messages: GptMessage[]): Promise<string> {
+export async function sendGPT(messages: GptMessage[]) {
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: messages,
