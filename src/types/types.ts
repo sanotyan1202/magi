@@ -22,3 +22,10 @@ export type User = {
   id: number,
   name: string,
 }
+
+export type GptMessage = {
+  role: GptRole,
+  content: string,
+}
+
+type GptRole = "user" | "system" | "assistant"

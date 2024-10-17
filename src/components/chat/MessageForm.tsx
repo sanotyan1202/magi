@@ -2,6 +2,7 @@
 
 import { sendGPT } from "@/actions/gpt"
 import { useState } from "react"
+import { GptMessage } from "@/types/types"
 
 export default function MessageForm() {
 
@@ -9,8 +10,14 @@ export default function MessageForm() {
 
   const sendMessage = async () => {
     if (message.trim() === '') return
-    const response = await sendGPT(message)
-    console.log(response)
+
+    const messages: GptMessage[] = [
+      { role: "system", content: "you are helpful assistant" },
+      { role: "user", content: message },
+    ]
+
+    const response = await sendGPT(messages)
+    console.log(response) 
     setMessage('');
   }
 
