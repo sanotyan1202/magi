@@ -1,11 +1,11 @@
 import Logo from "./Logo"
-import SignIn from "./SignIn"
+import Auth from "./Auth"
 
 export default function Header() {
   return (
     <>
       <Logo />
-      <SignIn />
+      <Auth />
     </>
   )
 }
