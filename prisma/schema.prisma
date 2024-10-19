@@ -13,3 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Group {
+  id         Int       @id @default(autoincrement())
+  name       String
+  userId     String
+  channels   Channel[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Channel {
+  id         Int       @id @default(autoincrement())
+  title      String
+  url        String
+  group      Group     @relation(fields: [groupId], references: [id])
+  groupId    Int
+  messages   Message[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Message {
+  id         Int       @id @default(autoincrement())
+  content    String
+  name       String
+  channel    Channel   @relation(fields: [channelId], references: [id])
+  channelId  Int
+  threads    Thread[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Thread {
+  id         Int       @id @default(autoincrement())
+  content    String
+  name       String
+  message    Message   @relation(fields: [messageId], references: [id])
+  messageId  Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}

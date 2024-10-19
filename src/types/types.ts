@@ -9,18 +9,14 @@ export type Channel = {
   title: string,
   url: string,
   groupId: string,
+  messages: Message[],
 }
 
 export type Message = {
   id: number,
   content: string,
-  userId: number,
-  user: User,
-}
-
-export type User = {
-  id: number,
   name: string,
+  channelId: number,
 }
 
 export type GptMessage = {
