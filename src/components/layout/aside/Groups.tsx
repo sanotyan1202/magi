@@ -1,9 +1,11 @@
 "use client"
 
 import Channels from "@/components/layout/aside/Channels"
-import { Group } from "@/types/types"
+import { GroupWithChannels } from "@/prisma-types"
 
-export default function Groups({ groups }: { groups: Group[] }) {
+export default function Groups(
+  { groups }: { groups: GroupWithChannels[] }
+) {
   
   const toggleGroup = (event: React.MouseEvent<HTMLInputElement>) => {
     const channles = event.currentTarget.nextSibling as HTMLElement | null

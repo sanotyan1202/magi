@@ -1,25 +1,35 @@
 import Groups from "@/components/layout/aside/Groups"
-import { Group } from "@/types/types"
+import { PrismaClient } from "@prisma/client"
+import { auth } from "@/auth"
 
-export default function GroupsContainer() {
-  const groups : Group[] = [
-    {
-      id: 1,
-      name: "Group 1",
-      channels: [
-        { id: 1, title: "Channel 1", url: "/channel1", groupId: "1", messages: [] },
-        { id: 2, title: "Channel 2", url: "/channel2", groupId: "1", messages: [] },
-      ],
-    },
-    {
-      id: 2,
-      name: "Group 2",
-      channels: [
-        { id: 3, title: "Channel 3", url: "/channel3", groupId: "2", messages: [] },
-        { id: 4, title: "Channel 4", url: "/channel4", groupId: "2", messages: [] },
-      ],
-    }
-  ]
+const prisma = new PrismaClient()
+
+export default async function GroupsContainer() {
+
+  const session = await auth()
+
+  const groups = await prisma.group.findMany({
+    where: { userId: session.user.id},
+    include: { channels: true }
+  })
+
+  if (groups.length === 0) {
+    const group = await prisma.group.create({
+      data: {
+        name: '未分類',
+        userId: session.user.id,
+        channels: {
+          create: {
+            title: 'general',
+            url: '/channels/1',
+          }
+        }
+      },
+      include: { channels: true },
+    })
+
+    groups.push(group)
+  }
 
   return (
     <Groups groups={groups} />

@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { Channel } from "@/types/types"
+import { Channel } from "@/prisma-types"
 
 export default function Channels({ channles } : { channles: Channel[] }) {
   return (
-    <ul id={channles[0].groupId}>
+    <ul>
       {channles.map((channel) => (
         <li key={channel.id}>
           <Link href={channel.url}>{channel.title}</Link>

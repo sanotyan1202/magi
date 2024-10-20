@@ -5,13 +5,12 @@ export default async function SignIn() {
 
   const session = await auth()
 
+  const onSubmit = async () => {
+    "use server"
+    await signOut()
+  }
   return (
-    <form
-      action={async () => {
-        "use server"
-        await signOut()
-      }}
-    >
+    <form action={onSubmit}>
       <Image
         src={session.user?.image ?? ""}
         alt={session.user?.name ?? ""}
