@@ -1,6 +1,6 @@
 "use client"
 
-import Channels from "@/components/layouts/Channels"
+import Channels from "@/components/layout/aside/Channels"
 import { Group } from "@/types/types"
 
 export default function Groups({ groups }: { groups: Group[] }) {

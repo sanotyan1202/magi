@@ -1,6 +1,6 @@
 import { auth } from "@/auth"
-import SignOut from "@/components/layouts/SignOut"
-import SignIn from "@/components/layouts/SignIn"
+import SignOut from "@/components/layout/header/SignOut"
+import SignIn from "@/components/layout/header/SignIn"
 
 export default async function Auth() {
 

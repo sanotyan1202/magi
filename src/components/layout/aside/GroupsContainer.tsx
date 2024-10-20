@@ -1,4 +1,4 @@
-import Groups from "@/components/layouts/Groups"
+import Groups from "@/components/layout/aside/Groups"
 import { Group } from "@/types/types"
 
 export default function GroupsContainer() {
