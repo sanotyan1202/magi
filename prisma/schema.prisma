@@ -15,13 +15,13 @@ datasource db {
 
 generator zod {
   provider = "zod-prisma-types"
-  createRelationValuesTypes = true
 }
 
 model Group {
   id         Int       @id @default(autoincrement())
   name       String
   userId     String
+  isOpen     Boolean   @default(true)
   channels   Channel[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

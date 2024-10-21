@@ -12,7 +12,7 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const GroupScalarFieldEnumSchema = z.enum(['id','name','userId','created_at','updated_at']);
+export const GroupScalarFieldEnumSchema = z.enum(['id','name','userId','isOpen','created_at','updated_at']);
 
 export const ChannelScalarFieldEnumSchema = z.enum(['id','title','url','groupId','created_at','updated_at']);
 
@@ -35,20 +35,12 @@ export const GroupSchema = z.object({
   id: z.number().int(),
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean(),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
 })
 
 export type Group = z.infer<typeof GroupSchema>
-
-// GROUP RELATION SCHEMA
-//------------------------------------------------------
-
-export type GroupRelations = {
-  channels: Channel[];
-};
-
-export type GroupWithChannels = z.infer<typeof GroupSchema> & GroupRelations
 
 /////////////////////////////////////////
 // CHANNEL SCHEMA
@@ -124,6 +116,7 @@ export const GroupSelectSchema: z.ZodType<Prisma.GroupSelect> = z.object({
   id: z.boolean().optional(),
   name: z.boolean().optional(),
   userId: z.boolean().optional(),
+  isOpen: z.boolean().optional(),
   created_at: z.boolean().optional(),
   updated_at: z.boolean().optional(),
   channels: z.union([z.boolean(),z.lazy(() => ChannelFindManyArgsSchema)]).optional(),
@@ -232,6 +225,7 @@ export const GroupWhereInputSchema: z.ZodType<Prisma.GroupWhereInput> = z.object
   id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  isOpen: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updated_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   channels: z.lazy(() => ChannelListRelationFilterSchema).optional()
@@ -241,6 +235,7 @@ export const GroupOrderByWithRelationInputSchema: z.ZodType<Prisma.GroupOrderByW
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
+  isOpen: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   updated_at: z.lazy(() => SortOrderSchema).optional(),
   channels: z.lazy(() => ChannelOrderByRelationAggregateInputSchema).optional()
@@ -256,6 +251,7 @@ export const GroupWhereUniqueInputSchema: z.ZodType<Prisma.GroupWhereUniqueInput
   NOT: z.union([ z.lazy(() => GroupWhereInputSchema),z.lazy(() => GroupWhereInputSchema).array() ]).optional(),
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  isOpen: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updated_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   channels: z.lazy(() => ChannelListRelationFilterSchema).optional()
@@ -265,6 +261,7 @@ export const GroupOrderByWithAggregationInputSchema: z.ZodType<Prisma.GroupOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
+  isOpen: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   updated_at: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => GroupCountOrderByAggregateInputSchema).optional(),
@@ -281,6 +278,7 @@ export const GroupScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.GroupSc
   id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   userId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  isOpen: z.union([ z.lazy(() => BoolWithAggregatesFilterSchema),z.boolean() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updated_at: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -489,6 +487,7 @@ export const ThreadScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Thread
 export const GroupCreateInputSchema: z.ZodType<Prisma.GroupCreateInput> = z.object({
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean().optional(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional(),
   channels: z.lazy(() => ChannelCreateNestedManyWithoutGroupInputSchema).optional()
@@ -498,6 +497,7 @@ export const GroupUncheckedCreateInputSchema: z.ZodType<Prisma.GroupUncheckedCre
   id: z.number().int().optional(),
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean().optional(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional(),
   channels: z.lazy(() => ChannelUncheckedCreateNestedManyWithoutGroupInputSchema).optional()
@@ -506,6 +506,7 @@ export const GroupUncheckedCreateInputSchema: z.ZodType<Prisma.GroupUncheckedCre
 export const GroupUpdateInputSchema: z.ZodType<Prisma.GroupUpdateInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   channels: z.lazy(() => ChannelUpdateManyWithoutGroupNestedInputSchema).optional()
@@ -515,6 +516,7 @@ export const GroupUncheckedUpdateInputSchema: z.ZodType<Prisma.GroupUncheckedUpd
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   channels: z.lazy(() => ChannelUncheckedUpdateManyWithoutGroupNestedInputSchema).optional()
@@ -524,6 +526,7 @@ export const GroupCreateManyInputSchema: z.ZodType<Prisma.GroupCreateManyInput> 
   id: z.number().int().optional(),
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean().optional(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional()
 }).strict();
@@ -531,6 +534,7 @@ export const GroupCreateManyInputSchema: z.ZodType<Prisma.GroupCreateManyInput> 
 export const GroupUpdateManyMutationInputSchema: z.ZodType<Prisma.GroupUpdateManyMutationInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -539,6 +543,7 @@ export const GroupUncheckedUpdateManyInputSchema: z.ZodType<Prisma.GroupUnchecke
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -754,6 +759,11 @@ export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
 }).strict();
 
+export const BoolFilterSchema: z.ZodType<Prisma.BoolFilter> = z.object({
+  equals: z.boolean().optional(),
+  not: z.union([ z.boolean(),z.lazy(() => NestedBoolFilterSchema) ]).optional(),
+}).strict();
+
 export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
@@ -779,6 +789,7 @@ export const GroupCountOrderByAggregateInputSchema: z.ZodType<Prisma.GroupCountO
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
+  isOpen: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   updated_at: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -791,6 +802,7 @@ export const GroupMaxOrderByAggregateInputSchema: z.ZodType<Prisma.GroupMaxOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
+  isOpen: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   updated_at: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -799,6 +811,7 @@ export const GroupMinOrderByAggregateInputSchema: z.ZodType<Prisma.GroupMinOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
+  isOpen: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   updated_at: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -839,6 +852,14 @@ export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggreg
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedStringFilterSchema).optional(),
   _max: z.lazy(() => NestedStringFilterSchema).optional()
+}).strict();
+
+export const BoolWithAggregatesFilterSchema: z.ZodType<Prisma.BoolWithAggregatesFilter> = z.object({
+  equals: z.boolean().optional(),
+  not: z.union([ z.boolean(),z.lazy(() => NestedBoolWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedBoolFilterSchema).optional(),
+  _max: z.lazy(() => NestedBoolFilterSchema).optional()
 }).strict();
 
 export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.object({
@@ -1017,6 +1038,10 @@ export const ChannelUncheckedCreateNestedManyWithoutGroupInputSchema: z.ZodType<
 
 export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> = z.object({
   set: z.string().optional()
+}).strict();
+
+export const BoolFieldUpdateOperationsInputSchema: z.ZodType<Prisma.BoolFieldUpdateOperationsInput> = z.object({
+  set: z.boolean().optional()
 }).strict();
 
 export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> = z.object({
@@ -1210,6 +1235,11 @@ export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.
   not: z.union([ z.string(),z.lazy(() => NestedStringFilterSchema) ]).optional(),
 }).strict();
 
+export const NestedBoolFilterSchema: z.ZodType<Prisma.NestedBoolFilter> = z.object({
+  equals: z.boolean().optional(),
+  not: z.union([ z.boolean(),z.lazy(() => NestedBoolFilterSchema) ]).optional(),
+}).strict();
+
 export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.object({
   equals: z.coerce.date().optional(),
   in: z.coerce.date().array().optional(),
@@ -1263,6 +1293,14 @@ export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStri
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedStringFilterSchema).optional(),
   _max: z.lazy(() => NestedStringFilterSchema).optional()
+}).strict();
+
+export const NestedBoolWithAggregatesFilterSchema: z.ZodType<Prisma.NestedBoolWithAggregatesFilter> = z.object({
+  equals: z.boolean().optional(),
+  not: z.union([ z.boolean(),z.lazy(() => NestedBoolWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedBoolFilterSchema).optional(),
+  _max: z.lazy(() => NestedBoolFilterSchema).optional()
 }).strict();
 
 export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.object({
@@ -1337,6 +1375,7 @@ export const ChannelScalarWhereInputSchema: z.ZodType<Prisma.ChannelScalarWhereI
 export const GroupCreateWithoutChannelsInputSchema: z.ZodType<Prisma.GroupCreateWithoutChannelsInput> = z.object({
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean().optional(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional()
 }).strict();
@@ -1345,6 +1384,7 @@ export const GroupUncheckedCreateWithoutChannelsInputSchema: z.ZodType<Prisma.Gr
   id: z.number().int().optional(),
   name: z.string(),
   userId: z.string(),
+  isOpen: z.boolean().optional(),
   created_at: z.coerce.date().optional(),
   updated_at: z.coerce.date().optional()
 }).strict();
@@ -1395,6 +1435,7 @@ export const GroupUpdateToOneWithWhereWithoutChannelsInputSchema: z.ZodType<Pris
 export const GroupUpdateWithoutChannelsInputSchema: z.ZodType<Prisma.GroupUpdateWithoutChannelsInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1403,6 +1444,7 @@ export const GroupUncheckedUpdateWithoutChannelsInputSchema: z.ZodType<Prisma.Gr
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  isOpen: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updated_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
