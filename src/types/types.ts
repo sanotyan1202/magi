@@ -1,7 +1,7 @@
-import { Group } from "@prisma/client"
+import { Section } from "@prisma/client"
 import { Channel } from "@prisma/client"
 
-export type GroupWithChannels = Group & { channels: Channel[] }
+export type SectionWithChannels = Section & { channels: Channel[] }
 
 export type GptMessage = {
   role: GptRole,

@@ -1,5 +1,5 @@
 import Header from "@/components/layout/header/Header"
-import GroupsContainer from "@/components/layout/aside/GroupsContainer"
+import GroupsContainer from "@/components/layout/aside/SectionsContainer"
 
 export default function Home() {
   return (
