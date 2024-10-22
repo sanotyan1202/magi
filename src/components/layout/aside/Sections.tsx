@@ -12,7 +12,7 @@ export default function Sections(
   const [sectionState, setSectionState] = useState(sections);
 
   const handleToggle = async (sectionId: number, isOpen: boolean) => {
-    // グループの開閉をDBに登録
+    // セクションの開閉をDBに登録
     await toggleSection(sectionId, isOpen);
 
     // ローカルの状態を更新
@@ -31,9 +31,14 @@ export default function Sections(
             className="mb-2 font-semibold cursor-pointer"
             onClick={() => { handleToggle(section.id, section.isOpen) }}
           >
+            <span className="mr-2">
+              {section.isOpen ? "▼" : "▶︎"}
+            </span>
             {section.name}
           </div>
-          { section.isOpen && <Channels channles={section.channels} /> }
+          <div className="ml-5">
+            { section.isOpen && <Channels channles={section.channels} /> }
+          </div>
         </div>
       ))}
     </>
