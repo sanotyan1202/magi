@@ -9,3 +9,5 @@ export type GptMessage = {
 }
 
 type GptRole = "user" | "system" | "assistant"
+
+export type ActionType = "section" | "channel" | null

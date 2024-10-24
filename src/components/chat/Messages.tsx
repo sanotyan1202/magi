@@ -1,6 +1,10 @@
 import { Message } from "@prisma/client"
 
-export default function Messages({ messages }: { messages: Message[] }) {
+type MessagesProps = {
+  messages: Message[]
+}
+
+export default function Messages({ messages }: MessagesProps) {
   return (
     <>
       {messages.map((message) => (

@@ -2,45 +2,47 @@
 
 import Channels from "@/components/layout/aside/Channels"
 import { SectionWithChannels } from "@/types/types"
-import { toggleSection } from "@/actions/toggleSection"
-import { useState } from "react"
+import { toggleSection } from "@/actions/sectionAction"
+
+type SectionsProps = {
+  sectionsState: SectionWithChannels[],
+  setSectionsState: (sections: SectionWithChannels[]) => void
+}
 
 export default function Sections(
-  { sections }: { sections: SectionWithChannels[] }
+  { sectionsState, setSectionsState }: SectionsProps
 ) {
 
-  const [sectionState, setSectionState] = useState(sections);
-
   const handleToggle = async (sectionId: number, isOpen: boolean) => {
+
     // セクションの開閉をDBに登録
     await toggleSection(sectionId, isOpen);
 
-    // ローカルの状態を更新
-    setSectionState(prevSections =>
-      prevSections.map(section =>
-        section.id === sectionId ? { ...section, isOpen: !isOpen } : section
-      )
-    )
+    // ステートに反映
+    setSectionsState(sectionsState.map(section =>
+      section.id === sectionId ? { ...section, isOpen: !isOpen } : section))
   }
   
   return (
-    <>
-      {sectionState.map((section) => (
+    <div className="flex flex-col">
+      {sectionsState.map((section, index) => (
         <div key={section.id}>
           <div
-            className="mb-2 font-semibold cursor-pointer"
+            className={`${index === 0 ? "mt-2" : "mt-5"} mb-1 cursor-pointer flex`}
             onClick={() => { handleToggle(section.id, section.isOpen) }}
           >
-            <span className="mr-2">
+            <div className="mr-2 w-3">
               {section.isOpen ? "▼" : "▶︎"}
-            </span>
+            </div>
             {section.name}
           </div>
-          <div className="ml-5">
-            { section.isOpen && <Channels channles={section.channels} /> }
-          </div>
+          {section.isOpen &&
+            <div className="flex">
+              <Channels channles={section.channels} />
+            </div>
+          }
         </div>
       ))}
-    </>
+    </div>
   )
 }

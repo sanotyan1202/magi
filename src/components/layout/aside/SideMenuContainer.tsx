@@ -1,10 +1,10 @@
-import Sections from "@/components/layout/aside/Sections"
+import SideMenu from "@/components/layout/aside/SideMenu"
 import { PrismaClient } from "@prisma/client"
 import { auth } from "@/auth"
 
 const prisma = new PrismaClient()
 
-export default async function SectionsContainer() {
+export default async function SideMenuContainer() {
 
   // 認証情報取得
   const session = await auth()
@@ -35,6 +35,6 @@ export default async function SectionsContainer() {
   }
 
   return (
-    <Sections sections={sections} />
+    <SideMenu sections={sections} />
   )
 }

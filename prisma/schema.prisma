@@ -30,7 +30,6 @@ model Section {
 model Channel {
   id         Int       @id @default(autoincrement())
   title      String
-  url        String
   section    Section     @relation(fields: [sectionId], references: [id])
   sectionId  Int
   messages   Message[]
