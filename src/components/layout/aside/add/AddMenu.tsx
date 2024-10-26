@@ -1,11 +1,11 @@
 "use client"
 
-import { ActionType } from "@/types/types"
+import { ActionType, SetState } from "@/types/types"
 
 type Props = {
   handleMouseOver: () => void,
   handleMouseOut: () => void,
-  setActionType: React.Dispatch<React.SetStateAction<ActionType>>
+  setActionType: SetState<ActionType>,
 }
 
 export default function AddMenu(

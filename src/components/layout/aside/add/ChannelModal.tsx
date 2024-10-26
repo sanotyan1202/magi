@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { SectionWithChannels } from "@/types/types"
-import { ActionType } from "@/types/types"
+import { ActionType, SetState } from "@/types/types"
 import { createChannel } from "@/actions/channelAction"
 
 type Props = {
   sectionsState: SectionWithChannels[],
-  setActionType: React.Dispatch<React.SetStateAction<ActionType>>,
-  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
+  setActionType: SetState<ActionType>,
+  setSectionsState: SetState<SectionWithChannels[]>,
 }
 
 export default function ChannelModal(

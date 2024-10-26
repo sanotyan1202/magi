@@ -2,13 +2,13 @@
 
 import { sendGPT } from "@/actions/gpt"
 import { useState } from "react"
-import { GptMessage } from "@/types/types"
+import { GptMessage, SetState } from "@/types/types"
 import { Message } from "@prisma/client"
 import { createMessage } from "@/actions/messageAction"
 
 type Props = {
-  setMessagesState: React.Dispatch<React.SetStateAction<Message[]>>,
-  channelId: number,
+  setMessagesState: SetState<Message[]>,
+  channelId: number
 }
 
 export default function MessageForm({ setMessagesState, channelId }: Props) {

@@ -1,12 +1,12 @@
 "use client"
 
 import Channels from "@/components/layout/aside/Channels"
-import { SectionWithChannels } from "@/types/types"
+import { SectionWithChannels, SetState } from "@/types/types"
 import { toggleSection } from "@/actions/sectionAction"
 
 type Props = {
   sectionsState: SectionWithChannels[],
-  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
+  setSectionsState: SetState<SectionWithChannels[]>,
 }
 
 export default function Sections(

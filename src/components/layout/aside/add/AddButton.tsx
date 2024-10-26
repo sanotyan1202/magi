@@ -3,12 +3,12 @@
 import SectionModal from "@/components/layout/aside/add/SectionModal"
 import ChannelModal from "@/components/layout/aside/add/ChannelModal"
 import { useState } from "react"
-import { ActionType, SectionWithChannels } from "@/types/types"
+import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import AddMenu from "./AddMenu"
 
 type Props = {
   sectionsState: SectionWithChannels[],
-  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
+  setSectionsState: SetState<SectionWithChannels[]>,
 }
 
 export default function AddButton(
