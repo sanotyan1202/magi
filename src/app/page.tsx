@@ -1,5 +1,5 @@
 import Header from "@/components/layout/header/Header"
-import GroupsContainer from "@/components/layout/aside/SectionsContainer"
+import SideMenuContainer from "@/components/layout/aside/SideMenuContainer"
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       </header>
       <main className="flex flex-grow overflow-hidden">
         <aside className="w-64 p-4 overflow-y-auto text-white bg-gray-900">
-          <GroupsContainer />
+          <SideMenuContainer />
         </aside>
         <article>
 

@@ -1,11 +1,11 @@
 import Link from "next/link"
 import { Channel } from "@/prisma-types"
 
-type ChannelsProps = {
+type Props = {
   channles: Channel[]
 }
 
-export default function Channels({ channles }: ChannelsProps) {
+export default function Channels({ channles }: Props) {
   return (
     <ul>
       {channles.map((channel) => (

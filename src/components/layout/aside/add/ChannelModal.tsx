@@ -3,14 +3,14 @@ import { SectionWithChannels } from "@/types/types"
 import { ActionType } from "@/types/types"
 import { createChannel } from "@/actions/channelAction"
 
-type ChannelModalProps = {
+type Props = {
   sectionsState: SectionWithChannels[],
-  setActionType: (actionType: ActionType) => void,
-  setSectionsState: (sections: SectionWithChannels[]) => void
+  setActionType: React.Dispatch<React.SetStateAction<ActionType>>,
+  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
 }
 
 export default function ChannelModal(
-  { sectionsState, setActionType, setSectionsState }: ChannelModalProps
+  { sectionsState, setActionType, setSectionsState }: Props
 ) {
 
   const [selectedSectionId, setSelectedSectionId] =

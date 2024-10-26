@@ -4,13 +4,13 @@ import Channels from "@/components/layout/aside/Channels"
 import { SectionWithChannels } from "@/types/types"
 import { toggleSection } from "@/actions/sectionAction"
 
-type SectionsProps = {
+type Props = {
   sectionsState: SectionWithChannels[],
-  setSectionsState: (sections: SectionWithChannels[]) => void
+  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
 }
 
 export default function Sections(
-  { sectionsState, setSectionsState }: SectionsProps
+  { sectionsState, setSectionsState }: Props
 ) {
 
   const handleToggle = async (sectionId: number, isOpen: boolean) => {

@@ -6,13 +6,13 @@ import { useState } from "react"
 import { ActionType, SectionWithChannels } from "@/types/types"
 import AddMenu from "./AddMenu"
 
-type AddButtonProps = {
+type Props = {
   sectionsState: SectionWithChannels[],
-  setSectionsState: (sections: SectionWithChannels[]) => void
+  setSectionsState: React.Dispatch<React.SetStateAction<SectionWithChannels[]>>
 }
 
 export default function AddButton(
-  { sectionsState, setSectionsState }: AddButtonProps
+  { sectionsState, setSectionsState }: Props
 ) {
   const [showAddMenu, setShowAddMenu] = useState(false);
 

@@ -5,13 +5,11 @@ import PlusButton from "@/components/layout/aside/add/AddButton"
 import { SectionWithChannels } from "@/types/types"
 import { useState } from "react"
 
-type SideMenuProps = {
+type Props = {
   sections: SectionWithChannels[]
 }
 
-export default function SideMenu(
-  { sections }: SideMenuProps
-) {
+export default function SideMenu({ sections }: Props) {
 
   const [sectionsState, setSectionsState] = useState(sections)
 

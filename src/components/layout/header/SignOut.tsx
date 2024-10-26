@@ -18,7 +18,6 @@ export default async function SignIn() {
         height={30}
         className="rounded-full"
       />
-      <button type="submit">SignOut</button>
     </form>
   )
 }
