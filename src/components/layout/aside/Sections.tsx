@@ -2,7 +2,7 @@
 
 import Channels from "@/components/layout/aside/Channels"
 import { SectionWithChannels, SetState } from "@/types/types"
-import { toggleSection } from "@/actions/sectionAction"
+import { toggleSection } from "@/actions/sectionActions"
 
 type Props = {
   sectionsState: SectionWithChannels[],

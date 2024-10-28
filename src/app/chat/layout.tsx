@@ -1,7 +1,11 @@
 import Header from "@/components/layout/header/Header"
 import SideMenuContainer from "@/components/layout/aside/SideMenuContainer"
 
-export default function ChatLayout({ children }: { children: React.ReactNode }) {
+type Props = {
+  children: React.ReactNode
+}
+
+export default function ChatLayout({ children }: Props) {
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 h-16 flex items-center justify-between p-4 text-white bg-gray-800">

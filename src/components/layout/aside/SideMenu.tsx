@@ -1,7 +1,7 @@
 "use client"
 
 import Sections from "@/components/layout/aside/Sections"
-import AddButton from "@/components/layout/aside/add/AddButton"
+import AddButton from "@/components/layout/aside/AddButton"
 import { SectionWithChannels } from "@/types/types"
 import { useState } from "react"
 

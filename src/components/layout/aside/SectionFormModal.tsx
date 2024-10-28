@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { createSection } from "@/actions/sectionAction"
+import { createSection } from "@/actions/sectionActions"
 import { ActionType, SectionWithChannels, SetState } from "@/types/types"
+import Modal from "@/components/common/Modal"
 
 type Props = {
   sectionsState: SectionWithChannels[],
@@ -8,7 +9,7 @@ type Props = {
   setSectionsState: SetState<SectionWithChannels[]>
 }
 
-export default function SectionModal(
+export default function SectionFormModal(
   { sectionsState, setActionType, setSectionsState }: Props
 ) {
 
@@ -32,23 +33,21 @@ export default function SectionModal(
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded shadow-lg">
-        <h2 className="mb-4">セクションの作成</h2>
-        <input
-          type="text"
-          placeholder="名前を入力"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border p-2 w-full mb-4"
-        />
-        <button
-          className="bg-blue-500 text-white p-2 rounded"
-          onClick={handleSubmit}
-        >
-          作成する
-        </button>
-      </div>
-    </div>
+    <Modal>
+      <h2 className="mb-4">セクションの作成</h2>
+      <input
+        type="text"
+        placeholder="名前を入力"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="border p-2 w-full mb-4"
+      />
+      <button
+        className="bg-blue-500 text-white p-2 rounded"
+        onClick={handleSubmit}
+      >
+        作成する
+      </button>
+    </Modal>
   )
 }

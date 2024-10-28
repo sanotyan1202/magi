@@ -1,7 +1,7 @@
 "use client"
 
-import SectionModal from "@/components/layout/aside/add/SectionModal"
-import ChannelModal from "@/components/layout/aside/add/ChannelModal"
+import SectionFormModal from "@/components/layout/aside/SectionFormModal"
+import ChannelFormModal from "@/components/layout/aside/ChannelFormModal"
 import { useState } from "react"
 import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import AddMenu from "./AddMenu"
@@ -38,14 +38,14 @@ export default function AddButton(
         />
       )}
       {actionType === "section" &&
-        <SectionModal
+        <SectionFormModal
           sectionsState={sectionsState}
           setSectionsState={setSectionsState}
           setActionType={setActionType}
         />
       }
       {actionType === "channel" &&
-        <ChannelModal
+        <ChannelFormModal
           setSectionsState={setSectionsState}
           setActionType={setActionType}
           sectionsState={sectionsState}

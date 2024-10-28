@@ -1,4 +1,4 @@
-import Messages from "@/components/channel/Messages"
+import Messages from "@/components/channel/message/Messages"
 import { Message } from "@prisma/client"
 
 type Props = {
