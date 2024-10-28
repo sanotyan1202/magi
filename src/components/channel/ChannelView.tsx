@@ -22,6 +22,7 @@ export default function ChannelView({ channel }: Props) {
           <Members
             channelId={channel.id}
             members={channel.members}
+            setMessagesState={setMessagesState}
           />
         </div>
         <div className="mt-16 mb-20">

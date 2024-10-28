@@ -1,14 +1,18 @@
 import { useState } from 'react'
-import { Member } from '@/prisma-types'
+import { Member, Message } from '@/prisma-types'
+import { SetState } from '@/types/types'
 import MemberFormModal from '@/components/channel/member/MemberFormModal'
 
 
 type Props = {
   channelId: number,
   members: Member[],
+  setMessagesState: SetState<Message[]>
 }
 
-export default function Members({ channelId, members }: Props) {
+export default function Members(
+  { channelId, members, setMessagesState }: Props
+) {
 
   const [membersState, setMembersState] = useState<Member[]>(members)
   const [showModal, setShowModal] = useState(false)
@@ -29,6 +33,7 @@ export default function Members({ channelId, members }: Props) {
           channelId={channelId}
           setShowModal={setShowModal}
           setMembersState={setMembersState}
+          setMessagesState={setMessagesState}
         />
       )}
     </div>

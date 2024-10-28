@@ -1,17 +1,20 @@
 import { useState } from "react"
 import { createMember } from "@/actions/memberActions"
-import {Member } from "@/prisma-types"
-import { SetState } from "@/types/types"
+import { createMessage } from "@/actions/messageActions"
+import { sendGPT } from "@/actions/gpt"
+import { Member, Message } from "@/prisma-types"
+import { SetState, GptMessage } from "@/types/types"
 import Modal from "@/components/common/Modal"
 
 type Props = {
   channelId: number,
   setShowModal: SetState<boolean>,
   setMembersState: SetState<Member[]>
+  setMessagesState: SetState<Message[]>
 }
 
 export default function MemberFormModal(
-  { channelId, setShowModal, setMembersState }: Props
+  { channelId, setShowModal, setMembersState, setMessagesState }: Props
 ) {
 
   const [role, setRole] = useState("")
@@ -25,6 +28,25 @@ export default function MemberFormModal(
     // ローカルの状態を更新
     setMembersState((prev) => [...prev, member])
 
+    // GPTにメッセージ送信
+    const messages: GptMessage[] = [
+      { role: "system", content: content },
+      { role: "user", content:  "こんにちは、簡単に自己紹介してください。" },
+    ]
+    
+    const response = await sendGPT(messages)
+
+    // 返信がない場合は処理を終了
+    if (!response.content) return 
+
+    // メッセージを登録
+    const gptMessage = await createMessage(response.content, role, channelId)
+    
+    // ローカルの状態を更新
+    setMessagesState(
+      (prevMessages: Message[]) => [...prevMessages, gptMessage]
+    )
+    
     // モーダルを閉じる
     setShowModal(false)
   }
