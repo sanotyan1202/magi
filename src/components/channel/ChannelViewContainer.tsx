@@ -9,12 +9,22 @@ type Props = {
 
 export default async function ChannelViewContainer({ channelId }: Props) {
   
-  // メッセージ一覧取得
-  const messages = await prisma.message.findMany({
-    where: { channelId: channelId },
+  // チャンネル取得
+  const channel = await prisma.channel.findUnique({
+    where: { id: channelId },
+    include: {
+      members: true,
+      messages: true,
+    },
   })
 
   return (
-    <ChannelView messages={messages} channelId={channelId} />
+    <>
+      {channel ? 
+        <ChannelView channel={channel} />
+      : 
+        <div>Channel not found</div>
+      }
+    </>
   )
 }

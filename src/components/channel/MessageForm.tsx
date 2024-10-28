@@ -42,7 +42,8 @@ export default function MessageForm({ setMessagesState, channelId }: Props) {
     if (!response.content) return 
 
     // GPTの返答を登録
-    const gptMessage = await createMessage(response.content, 'Assistant', channelId)
+    const gptMessage =
+      await createMessage(response.content, 'Assistant', channelId)
 
     // ローカルの状態を更新
     setMessagesState(
@@ -57,10 +58,10 @@ export default function MessageForm({ setMessagesState, channelId }: Props) {
         onChange={(e) => setMessage(e.target.value)}
         value={message}
         placeholder="Type a message..."
-        className="w-full p-2 border border-gray-300 rounded-lg" />
+        className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 focus:outline-none" />
       <button
         onClick={sendMessage}
-        className="ml-4 p-4 border border-gray-300 rounded-lg">
+        className="ml-4 p-2 border border-gray-300 rounded-lg">
         Send
       </button>
     </div>

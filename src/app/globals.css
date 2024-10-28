@@ -19,3 +19,11 @@
     text-wrap: balance;
   }
 }
+
+.scroll-hide {
+  -ms-overflow-style: none; /* IEとEdge */
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}

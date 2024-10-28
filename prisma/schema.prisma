@@ -32,7 +32,18 @@ model Channel {
   title      String
   section    Section     @relation(fields: [sectionId], references: [id])
   sectionId  Int
+  members    Member[]
   messages   Message[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Member {
+  id         Int       @id @default(autoincrement())
+  role       String
+  content    String
+  channel    Channel   @relation(fields: [channelId], references: [id])
+  channelId  Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

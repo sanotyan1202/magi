@@ -21,7 +21,7 @@ export default function SideMenu({ sections }: Props) {
       />
       <PlusButton
         sectionsState={sectionsState}
-        setSectionsState={setSectionsState}        
+        setSectionsState={setSectionsState}
       />
     </div>
   )

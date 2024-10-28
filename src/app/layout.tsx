@@ -13,9 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className="flex flex-col h-screen">
+      <body className="flex flex-col h-screen scroll-hide">
         {children}
       </body>
     </html>
-  );
+  )
 }
