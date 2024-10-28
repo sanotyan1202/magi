@@ -1,7 +1,7 @@
 "use client"
 
 import Sections from "@/components/layout/aside/Sections"
-import PlusButton from "@/components/layout/aside/add/AddButton"
+import AddButton from "@/components/layout/aside/add/AddButton"
 import { SectionWithChannels } from "@/types/types"
 import { useState } from "react"
 
@@ -19,7 +19,7 @@ export default function SideMenu({ sections }: Props) {
         sectionsState={sectionsState}
         setSectionsState={setSectionsState}
       />
-      <PlusButton
+      <AddButton
         sectionsState={sectionsState}
         setSectionsState={setSectionsState}
       />

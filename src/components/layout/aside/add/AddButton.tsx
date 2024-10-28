@@ -24,6 +24,7 @@ export default function AddButton(
   return (
     <div className="relative text-gray-800">
       <button
+        className="text-white"
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
