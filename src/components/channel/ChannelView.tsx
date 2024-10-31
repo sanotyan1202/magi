@@ -26,10 +26,10 @@ export default function ChannelView({ channel }: Props) {
             setMessages={setMessages}
           />
         </div>
-        <div className="mt-16 mb-20">
+        <div className="mt-16 mb-24">
           <MessageView messages={messages} />
         </div>
-        <div className="fixed left-64 right-0 bottom-0 h-fit">
+        <div className="fixed left-64 right-0 bottom-0">
           <MessageForm
             channelId={channel.id}
             members={channel.members}

@@ -5,6 +5,7 @@ import { useState } from "react"
 import { GptMessage, SetState } from "@/types/types"
 import { Message, Member } from "@prisma/client"
 import { createMessage } from "@/actions/messageActions"
+import AutoResizeTextArea from "@/components/common/AutoResizeTextArea"
 
 type Props = {
   members: Member[],
@@ -87,21 +88,17 @@ export default function MessageForm(
     }      
     
     // メッセージをクリア
-    setMessage('');
+    setMessage('')
   }
 
   return (
     <div className="p-4 bg-white border-t border-gray-300 flex">
-      <input
-        type="text"
-        onChange={(e) => setMessage(e.target.value)}
-        value={message}
-        placeholder="Type a message..."
-        className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 focus:outline-none" />
+      <AutoResizeTextArea message={message} setMessage={setMessage} />
       <button
         onClick={sendMessage}
         className="ml-4 p-2 border border-gray-300 rounded-lg">
-        Send
+        <p>Send</p>
+        <p className="text-xs text-gray-400">(Ctrl+Enter)</p>
       </button>
     </div>
   )
