@@ -9,43 +9,42 @@ import Modal from "@/components/common/Modal"
 type Props = {
   channelId: number,
   setShowModal: SetState<boolean>,
-  setMembersState: SetState<Member[]>
-  setMessagesState: SetState<Message[]>
+  setMembers: SetState<Member[]>
+  setMessages: SetState<Message[]>
 }
 
 export default function MemberFormModal(
-  { channelId, setShowModal, setMembersState, setMessagesState }: Props
+  { channelId, setShowModal, setMembers, setMessages }: Props
 ) {
 
   const [role, setRole] = useState("")
   const [content, setContent] = useState("")
 
+  // メンバーの追加
   const handleSubmit = async () => {
 
     // メンバーを作成
     const member = await createMember(channelId, role, content)
 
     // ローカルの状態を更新
-    setMembersState((prev) => [...prev, member])
+    setMembers((prev) => [...prev, member])
 
     // GPTにメッセージ送信
     const messages: GptMessage[] = [
       { role: "system", content: content },
       { role: "user", content:  "こんにちは、簡単に自己紹介してください。" },
     ]
-    
     const response = await sendGPT(messages)
 
     // 返信がない場合は処理を終了
     if (!response.content) return 
 
     // メッセージを登録
-    const gptMessage = await createMessage(response.content, role, channelId)
+    const gptMessage =
+      await createMessage(response.content, role, channelId)
     
     // ローカルの状態を更新
-    setMessagesState(
-      (prevMessages: Message[]) => [...prevMessages, gptMessage]
-    )
+    setMessages(prev => [...prev, gptMessage])
     
     // モーダルを閉じる
     setShowModal(false)

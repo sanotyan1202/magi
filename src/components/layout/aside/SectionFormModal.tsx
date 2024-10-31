@@ -4,13 +4,12 @@ import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import Modal from "@/components/common/Modal"
 
 type Props = {
-  sectionsState: SectionWithChannels[],
   setActionType: SetState<ActionType>,
-  setSectionsState: SetState<SectionWithChannels[]>
+  setSections: SetState<SectionWithChannels[]>
 }
 
 export default function SectionFormModal(
-  { sectionsState, setActionType, setSectionsState }: Props
+  { setActionType, setSections }: Props
 ) {
 
   const [name, setName] = useState("")
@@ -18,15 +17,9 @@ export default function SectionFormModal(
   const handleSubmit = async () => {
     // セクションの作成
     const section = await createSection(name)
-
-    // ローカルの状態を更新
-    const sections = [
-      ...sectionsState,
-      { ...section, channels: [] }
-    ]
     
     // ステートに反映
-    setSectionsState(sections)
+    setSections(prev => [...prev, { ...section, channels: [] }])
 
     // モーダルを閉じる
     setActionType(null)

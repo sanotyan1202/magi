@@ -7,11 +7,11 @@ import MemberFormModal from '@/components/channel/member/MemberFormModal'
 type Props = {
   channelId: number,
   members: Member[],
-  setMessagesState: SetState<Message[]>
+  setMessages: SetState<Message[]>
 }
 
 export default function Members(
-  { channelId, members, setMessagesState }: Props
+  { channelId, members, setMessages }: Props
 ) {
 
   const [membersState, setMembersState] = useState<Member[]>(members)
@@ -32,8 +32,8 @@ export default function Members(
         <MemberFormModal
           channelId={channelId}
           setShowModal={setShowModal}
-          setMembersState={setMembersState}
-          setMessagesState={setMessagesState}
+          setMembers={setMembersState}
+          setMessages={setMessages}
         />
       )}
     </div>

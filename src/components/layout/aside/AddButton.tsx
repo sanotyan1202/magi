@@ -7,12 +7,12 @@ import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import AddMenu from "./AddMenu"
 
 type Props = {
-  sectionsState: SectionWithChannels[],
-  setSectionsState: SetState<SectionWithChannels[]>,
+  sections: SectionWithChannels[],
+  setSections: SetState<SectionWithChannels[]>,
 }
 
 export default function AddButton(
-  { sectionsState, setSectionsState }: Props
+  { sections, setSections }: Props
 ) {
   const [showAddMenu, setShowAddMenu] = useState(false);
 
@@ -39,16 +39,15 @@ export default function AddButton(
       )}
       {actionType === "section" &&
         <SectionFormModal
-          sectionsState={sectionsState}
-          setSectionsState={setSectionsState}
+          setSections={setSections}
           setActionType={setActionType}
         />
       }
       {actionType === "channel" &&
         <ChannelFormModal
-          setSectionsState={setSectionsState}
+          setSections={setSections}
           setActionType={setActionType}
-          sectionsState={sectionsState}
+          sections={sections}
         />
       }
     </div>

@@ -11,17 +11,17 @@ type Props = {
 
 export default function SideMenu({ sections }: Props) {
 
-  const [sectionsState, setSectionsState] = useState(sections)
+  const [sectionsState, setSections] = useState(sections)
 
   return (
     <div className="flex justify-between">
       <Sections
-        sectionsState={sectionsState}
-        setSectionsState={setSectionsState}
+        sections={sectionsState}
+        setSections={setSections}
       />
       <AddButton
-        sectionsState={sectionsState}
-        setSectionsState={setSectionsState}
+        sections={sections}
+        setSections={setSections}
       />
     </div>
   )

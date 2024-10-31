@@ -5,17 +5,17 @@ import { createChannel } from "@/actions/channelActions"
 import Moddal from "@/components/common/Modal"
 
 type Props = {
-  sectionsState: SectionWithChannels[],
+  sections: SectionWithChannels[],
   setActionType: SetState<ActionType>,
-  setSectionsState: SetState<SectionWithChannels[]>,
+  setSections: SetState<SectionWithChannels[]>,
 }
 
 export default function ChannelFormModal(
-  { sectionsState, setActionType, setSectionsState }: Props
+  { sections, setActionType, setSections }: Props
 ) {
 
   const [selectedSectionId, setSelectedSectionId] =
-    useState<number>(sectionsState[0].id)
+    useState<number>(sections[0].id)
     
   const [title, setTitle] = useState<string>("");
 
@@ -24,14 +24,11 @@ export default function ChannelFormModal(
     // チャンネルの作成
     const channel = await createChannel(title, selectedSectionId)
 
-    // ローカルの状態を更新
-    const sections = sectionsState.map(section => {
+    // ステートに反映
+    setSections(prev => prev.map(section => {
       return section.id === selectedSectionId ?
         { ...section, channels: [...section.channels, channel] } : section
-    })
-
-    // ステートに反映
-    setSectionsState(sections)
+    }))
 
     // モーダルを閉じる
     setActionType(null)
@@ -45,7 +42,7 @@ export default function ChannelFormModal(
           value={selectedSectionId}
           onChange={(e) => setSelectedSectionId(Number(e.target.value))}
         >
-        {sectionsState.map((section) => (
+        {sections.map((section) => (
             <option key={section.id} value={section.id}>
               {section.name}
             </option>))

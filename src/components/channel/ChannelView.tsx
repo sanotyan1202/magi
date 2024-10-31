@@ -12,7 +12,7 @@ type Props = {
 
 export default function ChannelView({ channel }: Props) {
 
-  const [messagesState, setMessagesState] = useState(channel.messages)
+  const [messages, setMessages] = useState(channel.messages)
 
   return (
     <>
@@ -22,16 +22,16 @@ export default function ChannelView({ channel }: Props) {
           <Members
             channelId={channel.id}
             members={channel.members}
-            setMessagesState={setMessagesState}
+            setMessages={setMessages}
           />
         </div>
         <div className="mt-16 mb-20">
-          <MessageView messages={messagesState} />
+          <MessageView messages={messages} />
         </div>
         <div className="fixed left-64 right-0 bottom-0 h-fit">
           <MessageForm
             channelId={channel.id}
-            setMessagesState={setMessagesState}
+            setMessages={setMessages}
           />
         </div> 
       </div>

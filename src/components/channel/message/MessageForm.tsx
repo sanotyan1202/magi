@@ -7,16 +7,17 @@ import { Message } from "@prisma/client"
 import { createMessage } from "@/actions/messageActions"
 
 type Props = {
-  setMessagesState: SetState<Message[]>,
+  setMessages: SetState<Message[]>,
   channelId: number
 }
 
 export default function MessageForm(
-  { setMessagesState, channelId }: Props
+  { setMessages, channelId }: Props
 ) {
 
   const [message, setMessage] = useState('')
 
+  // メッセージ送信
   const sendMessage = async () => {
 
     // 空文字の場合は送信しない
@@ -26,9 +27,7 @@ export default function MessageForm(
     const sendMessage = await createMessage(message, 'You', channelId)
 
     // ローカルの状態を更新
-    setMessagesState(
-      (prevMessages: Message[]) => [...prevMessages, sendMessage]
-    )
+    setMessages(prev => [...prev, sendMessage])
 
     // GPTにメッセージ送信
     const messages: GptMessage[] = [
@@ -48,9 +47,7 @@ export default function MessageForm(
       await createMessage(response.content, 'Assistant', channelId)
 
     // ローカルの状態を更新
-    setMessagesState(
-      (prevMessages: Message[]) => [...prevMessages, gptMessage]
-    )
+    setMessages(prev => [...prev, gptMessage])
   }
 
   return (
