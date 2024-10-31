@@ -3,16 +3,17 @@
 import { sendGPT } from "@/actions/gpt"
 import { useState } from "react"
 import { GptMessage, SetState } from "@/types/types"
-import { Message } from "@prisma/client"
+import { Message, Member } from "@prisma/client"
 import { createMessage } from "@/actions/messageActions"
 
 type Props = {
+  members: Member[],
   setMessages: SetState<Message[]>,
-  channelId: number
+  channelId: number,
 }
 
 export default function MessageForm(
-  { setMessages, channelId }: Props
+  { members, setMessages, channelId }: Props
 ) {
 
   const [message, setMessage] = useState('')
@@ -29,25 +30,64 @@ export default function MessageForm(
     // ローカルの状態を更新
     setMessages(prev => [...prev, sendMessage])
 
-    // GPTにメッセージ送信
-    const messages: GptMessage[] = [
-      { role: "system", content: "you are helpful assistant" },
-      { role: "user", content: message },
-    ]
-    const response = await sendGPT(messages)
+    // メンションが含まれているか
+    let noMension = true
 
+    members.forEach(async member => {
+      
+      // メンションを含む場合
+      if (message.includes(`@${member.role}`)) {
+
+        noMension = false
+
+        // GPTにメッセージ送信
+        const messages: GptMessage[] = [
+          {
+            role: "system",
+            content: `${member.content} あなた宛のメンション「@${member.role}」に返事をしてください。`
+          },
+          { role: "user", content: message },
+        ]
+        const response = await sendGPT(messages)
+
+        // 返信がない場合は処理を終了
+        if (response.content) {
+
+          // GPTの返答を登録
+          const gptMessage =
+            await createMessage(response.content, member.role, channelId)
+          
+          // ローカルの状態を更新
+          setMessages(prev => [...prev, gptMessage])
+        }
+      }      
+    })
+
+    if (noMension) {
+      // GPTにメッセージ送信
+      const messages: GptMessage[] = [
+        {
+          role: "system",
+          content: 'you are helpful assistant'
+        },
+        { role: "user", content: message },
+      ]
+      const response = await sendGPT(messages)
+
+      // 返信がない場合は処理を終了
+      if (response.content) {
+
+        // GPTの返答を登録
+        const gptMessage =
+          await createMessage(response.content, 'Assistant', channelId)
+        
+        // ローカルの状態を更新
+        setMessages(prev => [...prev, gptMessage])
+      }
+    }      
+    
     // メッセージをクリア
     setMessage('');
-
-    // 返信がない場合は処理を終了
-    if (!response.content) return 
-
-    // GPTの返答を登録
-    const gptMessage =
-      await createMessage(response.content, 'Assistant', channelId)
-
-    // ローカルの状態を更新
-    setMessages(prev => [...prev, gptMessage])
   }
 
   return (

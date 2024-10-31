@@ -31,7 +31,7 @@ export default function MemberFormModal(
 
     // GPTにメッセージ送信
     const messages: GptMessage[] = [
-      { role: "system", content: content },
+      { role: "system", content: `${content} あなた宛のメンション「@${ role }」に返事をしてください。` },
       { role: "user", content:  "こんにちは、簡単に自己紹介してください。" },
     ]
     const response = await sendGPT(messages)
