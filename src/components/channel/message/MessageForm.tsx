@@ -85,7 +85,7 @@ export default function MessageForm(
         // ローカルの状態を更新
         setMessages(prev => [...prev, gptMessage])
       }
-    }      
+    }
     
     // メッセージをクリア
     setMessage('')
