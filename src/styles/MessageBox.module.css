@@ -43,6 +43,7 @@
 }
 .markdownContent li {
   line-height: 2;
+  margin-left: 1rem;
 }
 .markdownContent table {
   border-collapse:separate;
