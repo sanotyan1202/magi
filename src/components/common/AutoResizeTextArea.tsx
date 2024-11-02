@@ -5,34 +5,42 @@ import { SetState } from "@/types/types"
 import { useRef, useEffect } from "react"
 
 type Props = {
-  message: string,
-  setMessage: SetState<string>,
-  suggestions: string[],
+  value: string,
+  setValue: SetState<string>,
+  suggestions?: string[],
+  placeholder?: string,
 }
 
 export default function AutoResizeTextArea(
-  { message, setMessage, suggestions }: Props
+  { value, setValue, suggestions = [], placeholder }: Props
 ) {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([])
-  const [highlightIndex, setHighlightIndex] = useState(-1) // 矢印キー位置
+  const [highlightIndex, setHighlightIndex] = useState(-1)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // テキストエリアの高さを自動調整
-  const autoResizeTextArea =
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const textarea = e.target
-      textarea.style.height = 'auto'
-      textarea.style.height = `${textarea.scrollHeight + 4}px`
+  const autoResizeTextArea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 4}px`
     }
+  }
+
+  // 初回レンダリング時の高さ調整
+  useEffect(() => {
+    autoResizeTextArea()
+  }, [])
+
   
   // メンションの候補を表示
   const handleChange =
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       // メッセージを更新
       const inputValue = e.target.value
-      setMessage(inputValue)
+      setValue(inputValue)
+      autoResizeTextArea()
 
       // 最後に入力された単語を取得
       const lastWord = inputValue.split(" ").pop()
@@ -67,14 +75,14 @@ export default function AutoResizeTextArea(
     (suggestion: string) => {
 
       // 入力メッセージを分割して最後の単語を削除し、候補を追加
-      const words = message.split(" ")
+      const words = value.split(" ")
       words.pop()
 
       // 入力メッセージの末尾にメンションを付与
       const newMessage = [...words, suggestion].join(" ") + " "
 
       // メッセージを更新
-      setMessage(newMessage)
+      setValue(newMessage)
 
       // 候補を非表示にする
       setShowSuggestions(false)
@@ -118,11 +126,12 @@ export default function AutoResizeTextArea(
   return (
     <>
       <textarea
+        ref={textareaRef}
         onChange={handleChange}
         onInput={autoResizeTextArea}
         onKeyDown={handleKeyDown}
-        value={message}
-        placeholder="Type a message..."
+        value={value}
+        placeholder={placeholder}
         className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-500 focus:outline-none resize-none overflow-hidden"></textarea>
       {showSuggestions && (
         <div

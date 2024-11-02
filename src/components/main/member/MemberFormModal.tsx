@@ -5,6 +5,7 @@ import { sendGPT } from "@/actions/gpt"
 import { Member, Message } from "@/prisma-types"
 import { SetState, GptMessage } from "@/types/types"
 import Modal from "@/components/common/Modal"
+import AutoResizeTextArea from "@/components/common/AutoResizeTextArea"
 
 type Props = {
   channelId: number,
@@ -95,12 +96,10 @@ export default function MemberFormModal(
         onChange={(e) => setRole(e.target.value)}
         className="border p-2 w-full mb-4 text-gray-600"
       />
-      <textarea
-        placeholder="役割の詳細を入力"
+      <AutoResizeTextArea
         value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className="border p-2 w-full mb-4 text-gray-600"
-      ></textarea>
+        setValue={setContent}
+      ></AutoResizeTextArea>
       <div className="flex justify-around">
         {member == null ? (
           <button

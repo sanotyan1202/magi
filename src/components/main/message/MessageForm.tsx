@@ -90,7 +90,12 @@ export default function MessageForm(
 
   return (
     <div className="p-4 bg-white border-t border-gray-300 flex">
-      <AutoResizeTextArea message={message} setMessage={setMessage} suggestions={members.map(m => `@${m.role}`)} />
+      <AutoResizeTextArea
+        value={message}
+        setValue={setMessage}
+        suggestions={members.map(m => `@${m.role}`)}
+        placeholder="Type a message"
+      />
       <button
         onClick={sendMessage}
         className="ml-4 p-2 border border-gray-300 rounded-lg">
