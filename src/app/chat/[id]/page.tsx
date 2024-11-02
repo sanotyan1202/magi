@@ -1,4 +1,4 @@
-import ChannelViewContainer from "@/components/channel/ChannelViewContainer";
+import ChannelViewContainer from "@/components/main/ChannelViewContainer";
 
 type Props = {
   params: {

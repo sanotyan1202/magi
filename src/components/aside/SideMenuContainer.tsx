@@ -1,4 +1,4 @@
-import SideMenu from "@/components/layout/aside/SideMenu"
+import SideMenu from "@/components/aside/SideMenu"
 import { PrismaClient } from "@prisma/client"
 import { auth } from "@/auth"
 

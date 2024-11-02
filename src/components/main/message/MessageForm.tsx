@@ -67,10 +67,7 @@ export default function MessageForm(
     if (noMension) {
       // GPTにメッセージ送信
       const messages: GptMessage[] = [
-        {
-          role: "system",
-          content: 'you are helpful assistant'
-        },
+        { role: "system", content: 'you are helpful assistant' },
         { role: "user", content: message },
       ]
       const response = await sendGPT(messages)

@@ -1,6 +1,6 @@
 "use client"
 
-import Channels from "@/components/layout/aside/Channels"
+import Channels from "@/components/aside/Channels"
 import { SectionWithChannels, SetState } from "@/types/types"
 import { toggleSection } from "@/actions/sectionActions"
 

@@ -1,7 +1,7 @@
 "use client"
 
-import SectionFormModal from "@/components/layout/aside/SectionFormModal"
-import ChannelFormModal from "@/components/layout/aside/ChannelFormModal"
+import SectionFormModal from "@/components/aside/SectionFormModal"
+import ChannelFormModal from "@/components/aside/ChannelFormModal"
 import { useState } from "react"
 import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import AddMenu from "./AddMenu"

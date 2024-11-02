@@ -1,5 +1,5 @@
-import Header from "@/components/layout/header/Header"
-import SideMenuContainer from "@/components/layout/aside/SideMenuContainer"
+import Header from "@/components/header/Header"
+import SideMenuContainer from "@/components/aside/SideMenuContainer"
 
 type Props = {
   children: React.ReactNode

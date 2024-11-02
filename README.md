@@ -35,8 +35,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
 TODO:
-Markdown対応
-チャンネル、セクション、メンバー更新、削除
-Reducer対応
+チャンネル、セクション、メンバー編集、削除
+連続的な会話
+AI同士の会話

@@ -1,4 +1,4 @@
-import ChannelView from "@/components/channel/ChannelView"
+import ChannelView from "@/components/main/ChannelView"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()

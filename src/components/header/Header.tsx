@@ -1,5 +1,5 @@
-import Logo from "./Logo"
-import Auth from "./Auth"
+import Logo from "@/components/header/Logo"
+import Auth from "@/components/header/Auth"
 
 export default function Header() {
   return (

@@ -1,10 +1,10 @@
 "use client"
 
-import MessageView from "@/components/channel/message/MessageView"
-import MessageForm from "@/components/channel/message/MessageForm"
+import MessageView from "@/components/main/message/MessageView"
+import MessageForm from "@/components/main/message/MessageForm"
 import { useState } from "react"
 import { ChannelWithMessagesAndMembers } from "@/types/types"
-import Members from "@/components/channel/member/Members"
+import Members from "@/components/main/member/Members"
 
 type Props = {
   channel: ChannelWithMessagesAndMembers,

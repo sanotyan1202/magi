@@ -1,4 +1,4 @@
-import MessageBox from "@/components/channel/message/MessageBox"
+import MessageBox from "@/components/main/message/MessageBox"
 import { Message } from "@prisma/client"
 import { useEffect, useRef } from "react"
 

@@ -1,5 +1,5 @@
 import Header from "@/components/layout/header/Header"
-import SideMenuContainer from "@/components/layout/aside/SideMenuContainer"
+import SideMenuContainer from "@/components/aside/SideMenuContainer"
 
 export default function Home() {
   return (

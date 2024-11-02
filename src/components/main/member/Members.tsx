@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Member, Message } from '@/prisma-types'
 import { SetState } from '@/types/types'
-import MemberFormModal from '@/components/channel/member/MemberFormModal'
+import MemberFormModal from '@/components/main/member/MemberFormModal'
 
 
 type Props = {
