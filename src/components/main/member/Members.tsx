@@ -16,21 +16,32 @@ export default function Members(
 
   const [membersState, setMembersState] = useState<Member[]>(members)
   const [showModal, setShowModal] = useState(false)
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null)
+
+  const handleClick = (selectedMember: Member | null) => {
+    setSelectedMember(selectedMember)
+    setShowModal(true)
+  }
 
   return (
     <div className="flex">
       <span
         className="text-sm text-gray-500 p-1 cursor-pointer hover:text-blue-700"
-        onClick={() => setShowModal(true)}
+        onClick={() => handleClick(null)}
       >
         + add member
       </span>
       {membersState.map(member => (
-        <span key={member.id} className="text-sm text-gray-500 p-1 cursor-pointer hover:text-blue-700">@{member.role}</span>
+        <span
+          key={member.id}
+          className="text-sm text-gray-500 p-1 cursor-pointer hover:text-blue-700"
+          onClick={() => handleClick(member)}
+        >@{member.role}</span>
       ))}
       {showModal && (
         <MemberFormModal
           channelId={channelId}
+          member={selectedMember}
           setShowModal={setShowModal}
           setMembers={setMembersState}
           setMessages={setMessages}
