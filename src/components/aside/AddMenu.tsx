@@ -5,12 +5,16 @@ import { ActionType, SetState } from "@/types/types"
 type Props = {
   handleMouseOver: () => void,
   handleMouseOut: () => void,
-  setActionType: SetState<ActionType>,
+  setShowSectionFormModal: SetState<boolean>,
+  setShowChannelFormModal: SetState<boolean>,
 }
 
-export default function AddMenu(
-  { handleMouseOver, handleMouseOut, setActionType }: Props
-) {
+export default function AddMenu({
+  handleMouseOver,
+  handleMouseOut,
+  setShowSectionFormModal,
+  setShowChannelFormModal
+}: Props) {
   return (
     <div
       className="absolute top-1 left-1
@@ -22,11 +26,11 @@ export default function AddMenu(
       <ul>
         <li
           className="cursor-pointer p-2 hover:bg-slate-200 text-center"
-          onClick={() => setActionType("section")}
+          onClick={() => setShowSectionFormModal(true)}
         >セクションを作成する</li>
         <li
           className="cursor-pointer p-2 hover:bg-slate-200 text-center"
-          onClick={() => setActionType("channel")}
+          onClick={() => setShowChannelFormModal(true)}
         >チャンネルを作成する</li>
       </ul>
     </div>

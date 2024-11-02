@@ -6,12 +6,12 @@ import Moddal from "@/components/common/Modal"
 
 type Props = {
   sections: SectionWithChannels[],
-  setActionType: SetState<ActionType>,
+  setShowChannelFormModal: SetState<boolean>,
   setSections: SetState<SectionWithChannels[]>,
 }
 
 export default function ChannelFormModal(
-  { sections, setActionType, setSections }: Props
+  { sections, setShowChannelFormModal, setSections }: Props
 ) {
 
   const [selectedSectionId, setSelectedSectionId] =
@@ -31,11 +31,11 @@ export default function ChannelFormModal(
     }))
 
     // モーダルを閉じる
-    setActionType(null)
+    setShowChannelFormModal(false)
   }
 
   return (
-    <Moddal>
+    <Moddal setShowModal={setShowChannelFormModal}>
       <h2 className="mb-4">チャンネルを作成</h2>
         <select
           className="border p-2 w-full mb-4"

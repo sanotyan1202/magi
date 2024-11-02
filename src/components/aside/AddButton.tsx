@@ -3,23 +3,24 @@
 import SectionFormModal from "@/components/aside/SectionFormModal"
 import ChannelFormModal from "@/components/aside/ChannelFormModal"
 import { useState } from "react"
-import { ActionType, SectionWithChannels, SetState } from "@/types/types"
-import AddMenu from "./AddMenu"
+import { SectionWithChannels, SetState } from "@/types/types"
+import AddMenu from "@/components/aside/AddMenu"
 
 type Props = {
   sections: SectionWithChannels[],
   setSections: SetState<SectionWithChannels[]>,
 }
 
-export default function AddButton(
+export default function ShowModalMenu(
   { sections, setSections }: Props
 ) {
-  const [showAddMenu, setShowAddMenu] = useState(false);
+  const [showAddMenu, setShowAddMenu] = useState(false)
 
   const handleMouseOver = () => setShowAddMenu(true)
   const handleMouseOut = () => setShowAddMenu(false)
 
-  const [actionType, setActionType] = useState<ActionType>(null);
+  const [showSectionFormModal, setShowSectionFormModal] = useState(false)
+  const [showChannelFormModal, setShowChannelFormModal] = useState(false)
 
   return (
     <div className="relative text-gray-800">
@@ -34,19 +35,20 @@ export default function AddButton(
         <AddMenu
           handleMouseOut={handleMouseOut}
           handleMouseOver={handleMouseOver}
-          setActionType={setActionType}
+          setShowSectionFormModal={setShowSectionFormModal}
+          setShowChannelFormModal={setShowChannelFormModal}
         />
       )}
-      {actionType === "section" &&
+      {showSectionFormModal &&
         <SectionFormModal
           setSections={setSections}
-          setActionType={setActionType}
+          setShowSectionFormModal={setShowSectionFormModal}
         />
       }
-      {actionType === "channel" &&
+      {showChannelFormModal &&
         <ChannelFormModal
           setSections={setSections}
-          setActionType={setActionType}
+          setShowChannelFormModal={setShowChannelFormModal}
           sections={sections}
         />
       }

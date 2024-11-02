@@ -87,7 +87,7 @@ export default function MemberFormModal(
   }
   
   return (
-    <Modal>
+    <Modal setShowModal={setShowModal}>
       <h2 className="mb-4">メンバーの追加</h2>
       <input
         type="text"

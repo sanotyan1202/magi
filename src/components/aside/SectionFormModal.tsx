@@ -4,12 +4,12 @@ import { ActionType, SectionWithChannels, SetState } from "@/types/types"
 import Modal from "@/components/common/Modal"
 
 type Props = {
-  setActionType: SetState<ActionType>,
+  setShowSectionFormModal: SetState<boolean>,
   setSections: SetState<SectionWithChannels[]>
 }
 
 export default function SectionFormModal(
-  { setActionType, setSections }: Props
+  { setShowSectionFormModal, setSections }: Props
 ) {
 
   const [name, setName] = useState("")
@@ -22,11 +22,11 @@ export default function SectionFormModal(
     setSections(prev => [...prev, { ...section, channels: [] }])
 
     // モーダルを閉じる
-    setActionType(null)
+    setShowSectionFormModal(false)
   }
 
   return (
-    <Modal>
+    <Modal setShowModal={setShowSectionFormModal}>
       <h2 className="mb-4">セクションの作成</h2>
       <input
         type="text"
