@@ -8,9 +8,10 @@ type Props = {
   setSections: SetState<SectionWithChannels[]>
 }
 
-export default function SectionFormModal(
-  { setShowSectionFormModal, setSections }: Props
-) {
+export default ({
+  setShowSectionFormModal,
+  setSections,
+}: Props) => {
 
   const [name, setName] = useState("")
 

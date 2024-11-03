@@ -11,13 +11,17 @@ type Props = {
   channelId: number,
   member: Member | null,
   setShowModal: SetState<boolean>,
-  setMembers: SetState<Member[]>
-  setMessages: SetState<Message[]>
+  setMembers: SetState<Member[]>,
+  setMessages: SetState<Message[]>,
 }
 
-export default function MemberFormModal(
-  { channelId, member, setShowModal, setMembers, setMessages }: Props
-) {
+export default ({
+  channelId,
+  member,
+  setShowModal,
+  setMembers,
+  setMessages,
+}: Props) => {
 
   const [role, setRole] = useState(member?.role || "")
   const [content, setContent] = useState(member?.content || "")

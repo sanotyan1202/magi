@@ -7,7 +7,9 @@ type Props = {
   channelId: number,
 }
 
-export default async function ChannelViewContainer({ channelId }: Props) {
+export default async ({
+  channelId,
+}: Props) => {
   
   // チャンネル取得
   const channel = await prisma.channel.findUnique({

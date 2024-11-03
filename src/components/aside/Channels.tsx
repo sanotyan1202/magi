@@ -5,7 +5,9 @@ type Props = {
   channles: Channel[]
 }
 
-export default function Channels({ channles }: Props) {
+export default ({
+  channles,
+}: Props) => {
   return (
     <ul>
       {channles.map((channel) => (

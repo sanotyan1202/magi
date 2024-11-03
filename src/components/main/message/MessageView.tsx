@@ -6,7 +6,9 @@ type Props = {
   messages: Message[]
 }
 
-export default function MessageView({ messages }: Props) {
+export default ({
+  messages,
+}: Props) => {
 
   // スクロールさせたい要素にrefを設定
   const messagesEndRef = useRef<HTMLDivElement>(null)

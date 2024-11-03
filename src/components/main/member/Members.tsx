@@ -7,12 +7,14 @@ import MemberFormModal from '@/components/main/member/MemberFormModal'
 type Props = {
   channelId: number,
   members: Member[],
-  setMessages: SetState<Message[]>
+  setMessages: SetState<Message[]>,
 }
 
-export default function Members(
-  { channelId, members, setMessages }: Props
-) {
+export default ({
+  channelId,
+  members,
+  setMessages
+}: Props) => {
 
   const [membersState, setMembersState] = useState<Member[]>(members)
   const [showModal, setShowModal] = useState(false)

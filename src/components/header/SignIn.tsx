@@ -1,6 +1,6 @@
 import {signIn} from "@/auth"
 
-export default function UserIcon() {
+export default () => {
 
   const onSubmit = async () => {
     "use server"

@@ -10,7 +10,9 @@ type Props = {
   channel: ChannelWithMessagesAndMembers,
 }
 
-export default function ChannelView({ channel }: Props) {
+export default ({
+  channel,
+}: Props) => {
 
   const [messages, setMessages] = useState(channel.messages)
   

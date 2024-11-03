@@ -9,9 +9,10 @@ type Props = {
   setSections: SetState<SectionWithChannels[]>,
 }
 
-export default function Sections(
-  { sections, setSections }: Props
-) {
+export default ({
+  sections,
+  setSections,
+}: Props) => {
 
   // セクションの開閉を切り替え
   const handleToggle = async (sectionId: number, isOpen: boolean) => {

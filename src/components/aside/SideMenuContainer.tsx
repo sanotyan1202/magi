@@ -4,7 +4,7 @@ import { auth } from "@/auth"
 
 const prisma = new PrismaClient()
 
-export default async function SideMenuContainer() {
+export default async () => {
 
   // 認証情報取得
   const session = await auth()

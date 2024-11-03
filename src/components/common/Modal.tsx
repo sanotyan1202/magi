@@ -5,7 +5,11 @@ type Props = {
   setShowModal: SetState<boolean>,
 }
 
-export default function Modal({ children, setShowModal }: Props) {
+export default ({
+  children,
+  setShowModal,
+}: Props) => {
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"

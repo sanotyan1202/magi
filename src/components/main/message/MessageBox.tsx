@@ -6,7 +6,10 @@ type Props = {
   message: Message
 }
 
-export default function MessageBox({ message }: Props) {
+export default ({
+  message,
+}: Props) => {
+  
   return (
     <div className="mt-4">
       <div className={`p-3 mb-2 bg-white rounded-lg shadow ${styles.markdownContent}`}>

@@ -9,12 +9,13 @@ type Props = {
   setShowChannelFormModal: SetState<boolean>,
 }
 
-export default function AddMenu({
+export default ({
   handleMouseOver,
   handleMouseOut,
   setShowSectionFormModal,
-  setShowChannelFormModal
-}: Props) {
+  setShowChannelFormModal,
+}: Props) => {
+
   return (
     <div
       className="absolute top-1 left-1

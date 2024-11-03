@@ -11,9 +11,11 @@ type Props = {
   setSections: SetState<SectionWithChannels[]>,
 }
 
-export default function ShowModalMenu(
-  { sections, setSections }: Props
-) {
+export default ({
+  sections,
+  setSections,
+}: Props) => {
+  
   const [showAddMenu, setShowAddMenu] = useState(false)
 
   const handleMouseOver = () => setShowAddMenu(true)

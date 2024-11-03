@@ -13,9 +13,11 @@ type Props = {
   channelId: number,
 }
 
-export default function MessageForm(
-  { members, setMessages, channelId }: Props
-) {
+export default ({
+  members,
+  setMessages,
+  channelId
+}: Props) => {
 
   const [message, setMessage] = useState('')
 

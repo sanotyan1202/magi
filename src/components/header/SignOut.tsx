@@ -1,7 +1,7 @@
 import { signOut, auth } from "@/auth"
 import Image from "next/image"
 
-export default async function SignIn() {
+export default async () => {
 
   const session = await auth()
 

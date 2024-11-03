@@ -11,9 +11,13 @@ type Props = {
   placeholder?: string,
 }
 
-export default function AutoResizeTextArea(
-  { value, setValue, suggestions = [], placeholder }: Props
-) {
+export default ({
+  value,
+  setValue,
+  suggestions = [],
+  placeholder,
+}: Props) => {
+
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([])
   const [highlightIndex, setHighlightIndex] = useState(-1)

@@ -9,7 +9,9 @@ type Props = {
   sections: SectionWithChannels[]
 }
 
-export default function SideMenu({ sections }: Props) {
+export default ({
+  sections,
+}: Props) => {
 
   const [sectionsState, setSections] = useState(sections)
 
