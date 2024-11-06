@@ -1,11 +1,11 @@
 "use client"
 
-import { sendGPT } from "@/actions/gpt"
-import { useState } from "react"
-import { GptMessage, SetState } from "@/types/types"
+import { useEffect, useState } from "react"
+import { SetState } from "@/types/types"
 import { Message, Member } from "@prisma/client"
 import { createMessage } from "@/actions/messageActions"
 import AutoResizeTextArea from "@/components/common/AutoResizeTextArea"
+import { sendMessageToGPT, sendConversationToGPT } from "@/utils/gptFunctions"
 
 type Props = {
   members: Member[],
@@ -20,9 +20,14 @@ export default ({
 }: Props) => {
 
   const [message, setMessage] = useState('')
+  const [conversations, setConversations] = useState<string[]>([])
+  const [isConversation, setIsConversation] = useState(false)
+  const [inConversation, setInConversation] = useState(false)
 
   // メッセージ送信
   const sendMessage = async () => {
+    // メッセージをクリア
+    setMessage('')
 
     // 空文字の場合は送信しない
     if (message.trim() === '') return
@@ -30,64 +35,74 @@ export default ({
     // 送信メッセージ登録
     const sendMessage = await createMessage(message, 'You', channelId)
 
-    // ローカルの状態を更新
+    // 送信メッセージを画面に反映
     setMessages(prev => [...prev, sendMessage])
 
-    // メンションが含まれているか
-    let noMension = true
+    // メンバーそれぞれにメッセージを送信
+    const responses = await sendMessageToGPT(members, message)
 
-    members.forEach(async member => {
-      
-      // メンションを含む場合
-      if (message.includes(`@${member.role}`)) {
+    // 返信の数だけ繰り返す
+    for (const resp of responses) {
 
-        noMension = false
+      // 返信メッセージを登録
+      const gptMessage =
+      await createMessage(resp.content, resp.role, channelId)
+    
+      // 返信メッセージを画面に反映
+      setMessages(prev => [...prev, gptMessage])
+    }
+  }
 
-        // GPTにメッセージ送信
-        const messages: GptMessage[] = [
-          {
-            role: "system",
-            content: `${member.content} あなた宛のメンション「@${member.role}」に返事をしてください。`
-          },
-          { role: "user", content: message },
-        ]
-        const response = await sendGPT(messages)
+  useEffect(() => {
+    const autoConversation = async () => {
+      // 会議内容から一つ取り出す
+      const conversation = conversations.shift()
 
-        // 返信がない場合は処理を終了
-        if (response.content) {
-
-          // GPTの返答を登録
-          const gptMessage =
-            await createMessage(response.content, member.role, channelId)
-          
-          // ローカルの状態を更新
-          setMessages(prev => [...prev, gptMessage])
-        }
-      }      
-    })
-
-    if (noMension) {
-      // GPTにメッセージ送信
-      const messages: GptMessage[] = [
-        { role: "system", content: 'you are helpful assistant' },
-        { role: "user", content: message },
-      ]
-      const response = await sendGPT(messages)
-
-      // 返信がない場合は処理を終了
-      if (response.content) {
-
-        // GPTの返答を登録
+      // 存在しない場合は終了
+      if (!conversation || !inConversation) return
+  
+      // メンバーそれぞれにメッセージを送信
+      const responses = await sendConversationToGPT(members, message, conversation)
+  
+      // 返信の数だけ繰り返す
+      for (const resp of responses) {
+  
+        // 返信メッセージを登録
         const gptMessage =
-          await createMessage(response.content, 'Assistant', channelId)
-        
-        // ローカルの状態を更新
+          await createMessage(resp.content, resp.role, channelId)
+    
+        // 返信メッセージを画面に反映
         setMessages(prev => [...prev, gptMessage])
+  
+        // 返信メッセージを会議内容に追加
+        setConversations(prev => [...prev, resp.content])
       }
     }
+    setInterval(() => autoConversation(), 3000)
+  }, [conversations])
+
+
+  // 自動AI会議開始
+  const startConversation = async () => {
+
+    setInConversation(true)
+
+    // GPTに会議をするように送信
+    const responses = await sendConversationToGPT(members, message)
+
+    // 返信の数だけ繰り返す
+    for (const resp of responses) {
+
+      // 返信メッセージを登録
+      const gptMessage =
+      await createMessage(resp.content, resp.role, channelId)
     
-    // メッセージをクリア
-    setMessage('')
+      // 返信メッセージを画面に反映
+      setMessages(prev => [...prev, gptMessage])
+
+      // 会議のスタート
+      setConversations(prev => [...prev, resp.content])
+    }
   }
 
   return (
@@ -98,12 +113,52 @@ export default ({
         suggestions={members.map(m => `@${m.role}`)}
         placeholder="Type a message"
       />
-      <button
-        onClick={sendMessage}
-        className="ml-4 p-2 border border-gray-300 rounded-lg">
-        <p>Send</p>
-        <p className="text-xs text-gray-400">(Ctrl+Enter)</p>
-      </button>
+      {!isConversation && (
+        <>
+          <button
+            onClick={sendMessage}
+            className="ml-4 p-2 w-28 border border-gray-300 rounded-l-lg">
+            <p>Send</p>
+            <p className="text-xs text-gray-400">(Ctrl+Enter)</p>
+          </button>
+          <button
+            onClick={() => setIsConversation(true)}
+            className="border-l-0 border border-gray-300 rounded-r-lg text-gray-600 p-1 text-sm"
+          >
+            ▶︎
+          </button>
+        </>
+      )}
+      {isConversation && (
+        <>
+          {!inConversation && (
+            <button
+              onClick={startConversation}
+              className="ml-4 p-2 w-28 bg-indigo-700 text-white border border-gray-100 rounded-l-lg"
+            >
+              <p>Start</p>
+              <p className="text-xs text-gray-100">(Ctrl+Enter)</p>
+            </button>
+          )}
+          {inConversation && (
+            <button
+              onClick={() => setInConversation(false)}
+              className="ml-4 p-2 w-28 bg-indigo-700 text-white border border-gray-100 rounded-l-lg">
+              <p>Stop</p>
+              <p className="text-xs text-gray-100">(Ctrl+Enter)</p>
+            </button>
+          )}
+          <button
+            onClick={() => {
+              setIsConversation(false)
+              setInConversation(false)
+            }}
+            className="border-l-0 border border-gray-100 rounded-r-lg text-white bg-indigo-700 p-1 text-sm"
+          >
+            ▼
+          </button>
+        </>
+      )}
     </div>
   )
 }
